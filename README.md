@@ -22,6 +22,56 @@ Sistema de cadastro de usuários com sistema de indicações e pontuação em te
 - **CSS Puro Global** (sem frameworks CSS)
 - **Supabase** (banco de dados)
 
+## 🎯 Justificativas das Escolhas Tecnológicas
+
+### **Front-end: Next.js 15 + React 19**
+- **Next.js 15**: Escolhido pela robustez do App Router, SSR nativo, e API Routes integradas que eliminam a necessidade de um servidor back-end separado
+- **React 19**: Versão mais recente com melhor performance e hook otimizados para estado e efeitos
+- **TypeScript**: Garante type safety, reduz bugs em runtime e melhora a experiência de desenvolvimento
+
+### **Estilização: CSS Puro Global**
+- **CSS Puro**: Cumprindo o requisito de não usar frameworks como Bootstrap ou Tailwind
+- **Abordagem Global**: Simplifica manutenção, reduz bundle size e permite controle total sobre estilos
+- **Design Responsivo**: Mobile-first approach com media queries customizadas
+
+### **Back-end: Next.js API Routes**
+- **API Routes**: Integração nativa com Next.js, elimina complexidade de servidor separado
+- **RESTful**: Endpoints organizados seguindo padrões REST (/api/register, /api/login, /api/profile)
+- **Serverless**: Deploy simplificado e escalabilidade automática
+
+### **Banco de Dados: Supabase (PostgreSQL)**
+- **PostgreSQL**: Banco relacional robusto, ideal para relacionamentos entre usuários e indicações
+- **Supabase**: BaaS que oferece PostgreSQL managed, auth built-in e APIs automaticamente geradas
+- **Real-time**: Suporte nativo a subscriptions para futuras funcionalidades em tempo real
+
+### **Uso de IA no Desenvolvimento**
+- **GitHub Copilot**: Utilizado para acelerar desenvolvimento de componentes React e lógica de validação
+- **Assistente IA**: Ajudou na estruturação das APIs REST e otimização de queries SQL
+- **Code Review**: IA assistiu na identificação de possíveis bugs e melhorias de performance
+
+## ✅ Conformidade com Requisitos
+
+### **Requisitos Funcionais Atendidos:**
+- ✅ **Página de Cadastro**: Formulário completo com nome, email e senha
+- ✅ **Validação Front-end**: Email formato válido + senha 8+ caracteres com letras e números
+- ✅ **Página de Perfil**: Exibe nome do usuário, pontuação atual e link de indicação único
+- ✅ **Botão Copiar Link**: Funcionalidade implementada com feedback visual
+- ✅ **Sistema de Indicação**: +1 ponto automático para quem indica
+- ✅ **Atualização Pontuação**: **EXCEDEU O REQUISITO** - tempo real (10s) ao invés de apenas reload
+
+### **Requisitos Técnicos Atendidos:**
+- ✅ **CSS Puro**: Zero frameworks CSS (Bootstrap, Material UI, Tailwind)
+- ✅ **Responsivo**: Funciona perfeitamente em desktop e mobile
+- ✅ **API REST**: Endpoints organizados (/api/register, /api/login, /api/profile)
+- ✅ **Banco de Dados**: PostgreSQL via Supabase com tabelas relacionais
+- ✅ **Justificativas**: Todas as escolhas tecnológicas justificadas acima
+
+### **Funcionalidades Extras Implementadas:**
+- 🚀 **Atualização em Tempo Real**: Pontuação atualiza automaticamente a cada 10 segundos
+- 🔄 **Refresh Manual**: Botão para atualização instantânea da pontuação
+- 📱 **UX Aprimorada**: Feedback visual para ações do usuário
+- 🎨 **Design Moderno**: Interface limpa e intuitiva
+
 ## 📦 Instalação
 
 1. Clone o repositório:
@@ -41,13 +91,10 @@ npm install
    - Copie as credenciais do projeto
 
 4. Configure as variáveis de ambiente:
-```bash
-cp .env.example .env.local
-```
 
-Edite o arquivo `.env` com suas credenciais do Supabase:
+Crie um arquivo `.env` na raiz do projeto com suas credenciais do Supabase:
 ```env
-NEXT_PUBLIC_SUPABASE_URL=https://seu-projeto.supabase.co
+SUPABASE_URL=https://seu-projeto.supabase.co
 SUPABASE_SERVICE_ROLE_KEY=sua_service_role_key_aqui
 ```
 
