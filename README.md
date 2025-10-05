@@ -199,30 +199,8 @@ src/
     supabaseServer.ts     # Configuração do Supabase
 ```
 
-## 🚨 Segurança
-
-⚠️ **IMPORTANTE**: Esta implementação é para fins de demonstração. Para produção:
-
-1. **Hash de senhas**: Use bcrypt ou similar
-2. **Autenticação JWT**: Implemente tokens seguros
-3. **HTTPS**: Use sempre SSL/TLS
-4. **Validação servidor**: Nunca confie apenas no front-end
-5. **Rate limiting**: Limite tentativas de login
-6. **Sanitização**: Sanitize todas as entradas
-
-## 📝 Próximos Passos
-
-- [ ] Sistema de autenticação JWT
-- [ ] Hash de senhas com bcrypt
-- [ ] Middleware de autenticação
-- [ ] Melhorar segurança do sistema de indicações
-- [ ] QR Code para links de indicação
-- [ ] Sistema de convites por email
-- [ ] Paginação de indicações
-- [ ] Dashboard administrativo
-- [ ] Notificações em tempo real
-- [ ] Sistema de níveis/badges
-
 ---
 
-**Desenvolvido com ❤️ usando CSS puro e Next.js**
+
+
+
