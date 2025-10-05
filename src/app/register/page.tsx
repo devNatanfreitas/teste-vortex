@@ -18,11 +18,18 @@ function RegisterForm() {
   const searchParams = useSearchParams();
 
   useEffect(() => {
+    // Verificar se usuário já está logado
+    const token = localStorage.getItem('token');
+    if (token) {
+      router.push('/profile');
+      return;
+    }
+
     const ref = searchParams.get('ref');
     if (ref) {
       setReferralCode(ref);
     }
-  }, [searchParams]);
+  }, [searchParams, router]);
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {};

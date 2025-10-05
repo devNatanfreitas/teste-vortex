@@ -18,87 +18,71 @@ export default function Profile() {
   const [lastUpdate, setLastUpdate] = useState<Date | null>(null);
   const router = useRouter();
 
-  useEffect(() => {
-    const loadUserData = async () => {
-      console.log('Iniciando loadUserData...');
-      
-      try {
-        // Verifica se tem token
-        const token = localStorage.getItem('token');
-        console.log('Token exists:', !!token);
-        
-        if (!token) {
-          console.log('Sem token - redirecionando para login');
-          router.push('/login');
-          return;
-        }
 
-        // Tenta acessar a API
-        console.log('Fazendo requisição para API...');
-        const response = await fetch('/api/profile', {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        });
+  const loadUserData = async () => {
+    try {
+      // Se já tem usuário carregado, só atualiza o score
+      const token = localStorage.getItem('token');
+      console.log('Token exists:', !!token);
 
-        console.log('Response status:', response.status);
-
-        if (response.ok) {
-          const data = await response.json();
-          console.log(' Dados recebidos da API:', data);
-          setUser(data.user);
-        } else {
-          console.log(' Erro na API - removendo tokens e redirecionando');
-          localStorage.removeItem('token');
-          localStorage.removeItem('user');
-          router.push('/login');
-        }
-
-      } catch (error) {
-        console.error(' Erro:', error);
+      if (!token) {
+        console.log('Sem token - redirecionando para login');
         router.push('/login');
-      } finally {
-        setIsLoading(false);
+        return;
       }
-    };
 
+      // Tenta acessar a API
+      console.log('Fazendo requisição para API...');
+      const response = await fetch('/api/profile', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      console.log('Response status:', response.status);
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Dados recebidos da API:', data);
+        
+        // Se já tem user e o score é diferente, atualiza
+        if (user && data.user.score !== user.score) {
+          setUser(data.user);
+          localStorage.setItem('user', JSON.stringify(data.user));
+          setLastUpdate(new Date());
+        } else if (!user) {
+          // Se não tem user ainda, define pela primeira vez
+          setUser(data.user);
+          localStorage.setItem('user', JSON.stringify(data.user));
+          setLastUpdate(new Date());
+        }
+      } else {
+        console.log('Erro na API - removendo tokens e redirecionando');
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        router.push('/login');
+      }
+
+    } catch (error) {
+      console.error('Erro:', error);
+      router.push('/login');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+
+  useEffect(() => {
     loadUserData();
-  }, [router]);
+  }, []);
 
   useEffect(() => {
     if (!user) return;
 
-    const updateScore = async () => {
-      try {
-        const token = localStorage.getItem('token');
-        if (!token) {
-          router.push('/login');
-          return;
-        }
-        
-        const response = await fetch('/api/profile', {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        });
-        if (response.ok) {
-          const data = await response.json();
-          if (data.user.score !== user.score) {
-            setUser(data.user);
-            localStorage.setItem('user', JSON.stringify(data.user));
-            setLastUpdate(new Date());
-          }
-        } else if (response.status === 401) {
-          localStorage.removeItem('token');
-          localStorage.removeItem('user');
-          router.push('/login');
-        }
-      } catch (error) {
-        console.error('Erro ao atualizar pontuação automaticamente:', error);
-      }
-    };
-
-    const interval = setInterval(updateScore, 10000);
+    // Atualiza automaticamente a cada 10 segundos
+    const interval = setInterval(() => {
+      loadUserData();
+    }, 10000);
 
     return () => clearInterval(interval);
   }, [user]);
@@ -126,41 +110,17 @@ export default function Profile() {
   };
 
   const handleLogout = () => {
+    localStorage.removeItem('token');
     localStorage.removeItem('user');
-    router.push('/');
+    router.push('/login');
   };
 
   const handleRefreshScore = async () => {
     if (!user) return;
     
     setIsLoading(true);
-    try {
-      const token = localStorage.getItem('token');
-      if (!token) {
-        router.push('/login');
-        return;
-      }
-      
-      const response = await fetch('/api/profile', {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
-      if (response.ok) {
-        const data = await response.json();
-        setUser(data.user);
-        localStorage.setItem('user', JSON.stringify(data.user));
-        setLastUpdate(new Date());
-      } else if (response.status === 401) {
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
-        router.push('/login');
-      }
-    } catch (error) {
-      console.error('Erro ao atualizar pontuação:', error);
-    } finally {
-      setIsLoading(false);
-    }
+    await loadUserData();
+    setIsLoading(false);
   };
 
   if (isLoading) {

@@ -80,11 +80,34 @@ export async function POST(request: NextRequest) {
     if (referralCode) {
       const { data: referrer } = await supabase
         .from('users')
-        .select('id, score')
+        .select('id, score, email')
         .eq('referral_code', referralCode)
         .single();
 
       if (referrer) {
+       
+        if (referrer.email === email) {
+          return NextResponse.json(
+            { error: 'Não é possível usar seu próprio código de referência' },
+            { status: 400 }
+          );
+        }
+
+        
+        const { data: existingReferral } = await supabase
+          .from('referrals')
+          .select('id')
+          .eq('referrer_id', referrer.id)
+          .eq('referred_email', email)
+          .single();
+
+        if (existingReferral) {
+          return NextResponse.json(
+            { error: 'Este email já foi referenciado por este usuário' },
+            { status: 400 }
+          );
+        }
+
         await supabase
           .from('users')
           .update({ score: referrer.score + 1 })
@@ -94,7 +117,8 @@ export async function POST(request: NextRequest) {
           .from('referrals')
           .insert({
             referrer_id: referrer.id,
-            referred_id: newUser.id
+            referred_id: newUser.id,
+            referred_email: email
           });
       }
     }
