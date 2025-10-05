@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '../../../lib/supabaseServer';
+import bcrypt from 'bcryptjs';
 
 
 export async function POST(request: NextRequest) {
@@ -54,12 +55,14 @@ export async function POST(request: NextRequest) {
     
     const userReferralCode = Math.random().toString(36).substring(2, 10).toUpperCase();
 
+    const hashedPassword = await bcrypt.hash(password, 12);
+
     const { data: newUser, error: userError } = await supabase
       .from('users')
       .insert({
         name,
         email,
-        password, 
+        password: hashedPassword, 
         referral_code: userReferralCode,
         score: 0
       })

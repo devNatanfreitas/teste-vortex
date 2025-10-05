@@ -21,6 +21,15 @@ Sistema de cadastro de usuários com sistema de indicações e pontuação em te
 - **TypeScript**
 - **CSS Puro Global** (sem frameworks CSS)
 - **Supabase** (banco de dados)
+- **bcryptjs** (hash de senhas)
+
+## 🔒 Segurança Implementada
+
+- ✅ **Hash de Senhas**: Todas as senhas são hasheadas com bcrypt (salt rounds: 12)
+- ✅ **Validação Dupla**: Front-end e back-end validam todos os dados
+- ✅ **Sanitização**: Inputs são tratados antes de ir para o banco
+- ✅ **Códigos Únicos**: Sistema de referência com códigos aleatórios
+- ✅ **Verificação de Email**: Prevenção de duplicatas no banco
 
 ## 🎯 Justificativas das Escolhas Tecnológicas
 

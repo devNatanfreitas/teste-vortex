@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '../../../lib/supabaseServer';
+import bcrypt from 'bcryptjs';
 
 export async function POST(request: NextRequest) {
   try {
@@ -16,10 +17,18 @@ export async function POST(request: NextRequest) {
       .from('users')
       .select('*')
       .eq('email', email)
-      .eq('password', password) 
       .single();
 
     if (error || !user) {
+      return NextResponse.json(
+        { error: 'Email ou senha incorretos' },
+        { status: 401 }
+      );
+    }
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+
+    if (!isPasswordValid) {
       return NextResponse.json(
         { error: 'Email ou senha incorretos' },
         { status: 401 }
