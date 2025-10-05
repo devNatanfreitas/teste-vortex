@@ -174,9 +174,7 @@ export default function Profile() {
                 Última atualização: {lastUpdate.toLocaleTimeString()}
               </div>
             )}
-            <div className="auto-update-info">
-              ✨ Atualização automática a cada 10 segundos
-            </div>
+         
           </div>
         </div>
 
@@ -206,13 +204,6 @@ export default function Profile() {
               Link copiado para a área de transferência!
             </div>
           )}
-        </div>
-
-        <div className="stats">
-          <div className="stat-item">
-            <span className="stat-label">Código de Indicação</span>
-            <span className="stat-value">{user.referralCode}</span>
-          </div>
         </div>
       </div>
     </div>
