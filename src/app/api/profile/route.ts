@@ -1,22 +1,28 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '../../../lib/supabaseServer';
+import { verifyToken } from '../../../lib/jwt';
 
 export async function GET(request: NextRequest) {
   try {
-    // Obter o ID do usuário do header (definido pelo middleware)
-    const userId = request.headers.get('x-user-id');
+  
+    const authHeader = request.headers.get('authorization');
+    const token = authHeader?.replace('Bearer ', '');
 
-    if (!userId) {
+    
+    const userData = verifyToken(token || '');
+
+    if (!userData) {
       return NextResponse.json(
-        { error: 'Usuário não autenticado' },
+        { error: 'Token inválido ou expirado' },
         { status: 401 }
       );
     }
 
+  
     const { data: user, error } = await supabase
       .from('users')
       .select('*')
-      .eq('id', userId)
+      .eq('id', userData.userId) 
       .single();
 
     if (error || !user) {

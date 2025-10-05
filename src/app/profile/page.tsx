@@ -20,24 +20,42 @@ export default function Profile() {
 
   useEffect(() => {
     const loadUserData = async () => {
+      console.log('Iniciando loadUserData...');
+      
       try {
-        const savedUser = localStorage.getItem('user');
-        if (savedUser && savedUser !== 'undefined' && savedUser !== 'null') {
-          const userData: User = JSON.parse(savedUser);
-          setUser(userData);
-          
-          const response = await fetch(`/api/profile?userId=${userData.id}`);
-          if (response.ok) {
-            const data = await response.json();
-            setUser(data.user);
-            localStorage.setItem('user', JSON.stringify(data.user));
-          }
-        } else {
+        // Verifica se tem token
+        const token = localStorage.getItem('token');
+        console.log('Token exists:', !!token);
+        
+        if (!token) {
+          console.log('Sem token - redirecionando para login');
           router.push('/login');
           return;
         }
+
+        // Tenta acessar a API
+        console.log('Fazendo requisição para API...');
+        const response = await fetch('/api/profile', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+
+        console.log('Response status:', response.status);
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log(' Dados recebidos da API:', data);
+          setUser(data.user);
+        } else {
+          console.log(' Erro na API - removendo tokens e redirecionando');
+          localStorage.removeItem('token');
+          localStorage.removeItem('user');
+          router.push('/login');
+        }
+
       } catch (error) {
-        console.error('Erro ao carregar dados do usuário:', error);
+        console.error(' Erro:', error);
         router.push('/login');
       } finally {
         setIsLoading(false);
@@ -52,7 +70,17 @@ export default function Profile() {
 
     const updateScore = async () => {
       try {
-        const response = await fetch(`/api/profile?userId=${user.id}`);
+        const token = localStorage.getItem('token');
+        if (!token) {
+          router.push('/login');
+          return;
+        }
+        
+        const response = await fetch('/api/profile', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
         if (response.ok) {
           const data = await response.json();
           if (data.user.score !== user.score) {
@@ -60,6 +88,10 @@ export default function Profile() {
             localStorage.setItem('user', JSON.stringify(data.user));
             setLastUpdate(new Date());
           }
+        } else if (response.status === 401) {
+          localStorage.removeItem('token');
+          localStorage.removeItem('user');
+          router.push('/login');
         }
       } catch (error) {
         console.error('Erro ao atualizar pontuação automaticamente:', error);
@@ -103,12 +135,26 @@ export default function Profile() {
     
     setIsLoading(true);
     try {
-      const response = await fetch(`/api/profile?userId=${user.id}`);
+      const token = localStorage.getItem('token');
+      if (!token) {
+        router.push('/login');
+        return;
+      }
+      
+      const response = await fetch('/api/profile', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
       if (response.ok) {
         const data = await response.json();
         setUser(data.user);
         localStorage.setItem('user', JSON.stringify(data.user));
         setLastUpdate(new Date());
+      } else if (response.status === 401) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        router.push('/login');
       }
     } catch (error) {
       console.error('Erro ao atualizar pontuação:', error);
@@ -146,10 +192,10 @@ export default function Profile() {
 
         <div className="user-info">
           <div className="avatar">
-            {user.name.charAt(0).toUpperCase()}
+            {user?.name?.charAt(0)?.toUpperCase() || '?'}
           </div>
-          <h2 className="user-name">{user.name}</h2>
-          <p className="user-email">{user.email}</p>
+          <h2 className="user-name">{user?.name || 'Nome não disponível'}</h2>
+          <p className="user-email">{user?.email || 'Email não disponível'}</p>
         </div>
 
         <div className="score-section">
