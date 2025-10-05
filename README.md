@@ -43,7 +43,7 @@ npm install
 cp .env.example .env.local
 ```
 
-Edite o arquivo `.env.local` com suas credenciais do Supabase:
+Edite o arquivo `.env` com suas credenciais do Supabase:
 ```env
 NEXT_PUBLIC_SUPABASE_URL=https://seu-projeto.supabase.co
 SUPABASE_SERVICE_ROLE_KEY=sua_service_role_key_aqui
