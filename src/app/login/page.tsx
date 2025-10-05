@@ -54,7 +54,7 @@ export default function Login() {
         return;
       }
 
-      localStorage.setItem('user', JSON.stringify(data.user));
+      localStorage.setItem('user', JSON.stringify(data.token));
       router.push('/profile');
 
     } catch (error) {

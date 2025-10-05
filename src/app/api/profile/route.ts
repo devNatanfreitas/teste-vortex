@@ -3,13 +3,13 @@ import { supabase } from '../../../lib/supabaseServer';
 
 export async function GET(request: NextRequest) {
   try {
-    const { searchParams } = new URL(request.url);
-    const userId = searchParams.get('userId');
+    // Obter o ID do usuário do header (definido pelo middleware)
+    const userId = request.headers.get('x-user-id');
 
     if (!userId) {
       return NextResponse.json(
-        { error: 'ID do usuário é obrigatório' },
-        { status: 400 }
+        { error: 'Usuário não autenticado' },
+        { status: 401 }
       );
     }
 
