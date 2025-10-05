@@ -6,7 +6,6 @@ export async function POST(request: NextRequest) {
   try {
     const { name, email, password, referralCode } = await request.json();
 
-    // Validações básicas
     if (!name || !email || !password) {
       return NextResponse.json(
         { error: 'Nome, email e senha são obrigatórios' },
@@ -14,7 +13,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Validação de email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       return NextResponse.json(
@@ -23,7 +21,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Validação de senha
     if (password.length < 8) {
       return NextResponse.json(
         { error: 'Senha deve ter no mínimo 8 caracteres' },
@@ -57,7 +54,6 @@ export async function POST(request: NextRequest) {
     
     const userReferralCode = Math.random().toString(36).substring(2, 10).toUpperCase();
 
-    // Criar usuário
     const { data: newUser, error: userError } = await supabase
       .from('users')
       .insert({
@@ -78,7 +74,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Se foi indicado por alguém
     if (referralCode) {
       const { data: referrer } = await supabase
         .from('users')
@@ -87,13 +82,11 @@ export async function POST(request: NextRequest) {
         .single();
 
       if (referrer) {
-        // Incrementar pontuação do indicador
         await supabase
           .from('users')
           .update({ score: referrer.score + 1 })
           .eq('id', referrer.id);
 
-        // Registrar a indicação
         await supabase
           .from('referrals')
           .insert({

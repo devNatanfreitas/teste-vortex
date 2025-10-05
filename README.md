@@ -1,15 +1,17 @@
 # teste-vortex - Sistema de Indicações
 
-Sistema de cadastro de usuários com sistema de indicações e pontuação, desenvolvido com Next.js 15 e CSS puro.
+Sistema de cadastro de usuários com sistema de indicações e pontuação em tempo real, desenvolvido com Next.js 15 e CSS puro.
 
 ## 🚀 Funcionalidades
 
 - **Página de Cadastro**: Formulário com validação front-end para nome, email e senha
 - **Validação Robusta**: Email formato válido, senha mínimo 8 caracteres com letras e números
 - **Sistema de Indicações**: Links únicos de indicação para cada usuário
-- **Pontuação**: +1 ponto para cada indicação bem-sucedida
+- **Pontuação em Tempo Real**: +1 ponto para cada indicação bem-sucedida
+- **Atualização Automática**: Pontuação atualiza automaticamente a cada 10 segundos
 - **Página de Perfil**: Exibe nome, pontuação atual e link de indicação
 - **Botão Copiar Link**: Copia link de indicação para área de transferência
+- **Refresh Manual**: Botão para atualizar pontuação instantaneamente
 - **Design Responsivo**: Funciona em desktop e mobile
 
 ## 🛠️ Tecnologias
@@ -17,7 +19,7 @@ Sistema de cadastro de usuários com sistema de indicações e pontuação, dese
 - **Next.js 15** (App Router)
 - **React 19**
 - **TypeScript**
-- **CSS Modules** (CSS puro, sem frameworks)
+- **CSS Puro Global** (sem frameworks CSS)
 - **Supabase** (banco de dados)
 
 ## 📦 Instalação
@@ -87,7 +89,8 @@ Acesse [http://localhost:3000](http://localhost:3000)
 
 ### 3. Perfil
 - Após login, é redirecionado para `/profile`
-- Veja sua pontuação atual
+- Veja sua pontuação atual (atualiza automaticamente a cada 10 segundos)
+- Use o botão 🔄 para atualizar pontuação manualmente
 - Copie seu link de indicação
 - Compartilhe para ganhar pontos
 
@@ -95,7 +98,7 @@ Acesse [http://localhost:3000](http://localhost:3000)
 - Cada usuário tem um código único (ex: `ABC123DE`)
 - Link de indicação: `https://seusite.com/register?ref=ABC123DE`
 - Quando alguém se cadastra com seu link, você ganha 1 ponto
-- Pontuação atualiza ao recarregar a página
+- Pontuação atualiza automaticamente em tempo real
 
 ## 🎨 Validações
 
@@ -138,17 +141,15 @@ src/
         route.ts          # API de perfil
     login/
       page.tsx            # Página de login
-      login.module.css    # Estilos do login
     register/
       page.tsx            # Página de cadastro
-      register.module.css # Estilos do cadastro
     profile/
       page.tsx            # Página de perfil
-      profile.module.css  # Estilos do perfil
     page.tsx              # Página inicial
-    page.module.css       # Estilos da home
     layout.tsx            # Layout root
-    globals.css           # Estilos globais
+    globals.css           # Todos os estilos CSS
+  lib/
+    supabaseServer.ts     # Configuração do Supabase
 ```
 
 ## 🚨 Segurança
@@ -167,6 +168,9 @@ src/
 - [ ] Sistema de autenticação JWT
 - [ ] Hash de senhas com bcrypt
 - [ ] Middleware de autenticação
+- [ ] Melhorar segurança do sistema de indicações
+- [ ] QR Code para links de indicação
+- [ ] Sistema de convites por email
 - [ ] Paginação de indicações
 - [ ] Dashboard administrativo
 - [ ] Notificações em tempo real

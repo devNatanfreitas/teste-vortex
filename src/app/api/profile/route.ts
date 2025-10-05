@@ -13,7 +13,6 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    // Buscar dados do usuário
     const { data: user, error } = await supabase
       .from('users')
       .select('*')

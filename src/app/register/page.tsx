@@ -18,7 +18,6 @@ function RegisterForm() {
   const searchParams = useSearchParams();
 
   useEffect(() => {
-    // Capturar código de indicação da URL
     const ref = searchParams.get('ref');
     if (ref) {
       setReferralCode(ref);
@@ -28,12 +27,10 @@ function RegisterForm() {
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
 
-    // Validar nome
     if (!formData.name.trim()) {
       newErrors.name = 'Nome é obrigatório';
     }
 
-    // Validar email
     if (!formData.email.trim()) {
       newErrors.email = 'Email é obrigatório';
     } else {
@@ -43,7 +40,6 @@ function RegisterForm() {
       }
     }
 
-    // Validar senha
     if (!formData.password) {
       newErrors.password = 'Senha é obrigatória';
     } else {
@@ -69,7 +65,6 @@ function RegisterForm() {
       [name]: value
     }));
     
-    // Limpar erro do campo quando começar a digitar
     if (errors[name]) {
       setErrors(prev => ({
         ...prev,
@@ -106,10 +101,8 @@ function RegisterForm() {
         return;
       }
 
-      // Salvar dados do usuário no localStorage (simplificado)
       localStorage.setItem('user', JSON.stringify(data.user));
       
-      // Redirecionar para a página de perfil
       router.push('/profile');
 
     } catch (error) {
@@ -121,64 +114,64 @@ function RegisterForm() {
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.formCard}>
-        <h1 className={styles.title}>Criar Conta</h1>
+    <div className="page-container">
+      <div className="form-card">
+        <h1 className="page-title">Criar Conta</h1>
         
         {referralCode && (
-          <div className={styles.referralInfo}>
+          <div className="referral-info">
             <p>✨ Você foi indicado por alguém! Após o cadastro, seu indicador ganhará 1 ponto.</p>
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className={styles.form}>
-          <div className={styles.inputGroup}>
-            <label htmlFor="name" className={styles.label}>Nome</label>
+        <form onSubmit={handleSubmit} className="form">
+          <div className="input-group">
+            <label htmlFor="name" className="label">Nome</label>
             <input
               type="text"
               id="name"
               name="name"
               value={formData.name}
               onChange={handleInputChange}
-              className={`${styles.input} ${errors.name ? styles.inputError : ''}`}
+              className={`input ${errors.name ? 'input-error' : ''}`}
               placeholder="Digite seu nome"
             />
-            {errors.name && <span className={styles.error}>{errors.name}</span>}
+            {errors.name && <span className="error">{errors.name}</span>}
           </div>
 
-          <div className={styles.inputGroup}>
-            <label htmlFor="email" className={styles.label}>Email</label>
+          <div className="input-group">
+            <label htmlFor="email" className="label">Email</label>
             <input
               type="email"
               id="email"
               name="email"
               value={formData.email}
               onChange={handleInputChange}
-              className={`${styles.input} ${errors.email ? styles.inputError : ''}`}
+              className={`input ${errors.email ? 'input-error' : ''}`}
               placeholder="Digite seu email"
             />
-            {errors.email && <span className={styles.error}>{errors.email}</span>}
+            {errors.email && <span className="error">{errors.email}</span>}
           </div>
 
-          <div className={styles.inputGroup}>
-            <label htmlFor="password" className={styles.label}>Senha</label>
+          <div className="input-group">
+            <label htmlFor="password" className="label">Senha</label>
             <input
               type="password"
               id="password"
               name="password"
               value={formData.password}
               onChange={handleInputChange}
-              className={`${styles.input} ${errors.password ? styles.inputError : ''}`}
+              className={`input ${errors.password ? 'input-error' : ''}`}
               placeholder="Digite sua senha"
             />
-            {errors.password && <span className={styles.error}>{errors.password}</span>}
-            <small className={styles.passwordHint}>
+            {errors.password && <span className="error">{errors.password}</span>}
+            <small className="password-hint">
               Mínimo 8 caracteres, contendo letras e números
             </small>
           </div>
 
           {errors.general && (
-            <div className={styles.generalError}>
+            <div className="general-error">
               {errors.general}
             </div>
           )}
@@ -186,16 +179,16 @@ function RegisterForm() {
           <button
             type="submit"
             disabled={isLoading}
-            className={styles.submitButton}
+            className="btn btn-primary"
           >
             {isLoading ? 'Criando conta...' : 'Criar Conta'}
           </button>
         </form>
 
-        <div className={styles.loginLink}>
-          <p>
+        <div style={{ textAlign: 'center', marginTop: '24px', paddingTop: '24px', borderTop: '1px solid #e1e5e9' }}>
+          <p style={{ margin: 0, color: '#666', fontSize: '14px' }}>
             Já tem uma conta?{' '}
-            <a href="/login" className={styles.link}>
+            <a href="/login" className="link">
               Fazer login
             </a>
           </p>

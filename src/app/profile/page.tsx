@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import styles from './profile.module.css';
 
 interface User {
   id: string;
@@ -22,13 +21,11 @@ export default function Profile() {
   useEffect(() => {
     const loadUserData = async () => {
       try {
-        // Tentar carregar do localStorage primeiro
         const savedUser = localStorage.getItem('user');
-        if (savedUser) {
-          const userData = JSON.parse(savedUser);
+        if (savedUser && savedUser !== 'undefined' && savedUser !== 'null') {
+          const userData: User = JSON.parse(savedUser);
           setUser(userData);
           
-          // Atualizar dados do servidor para ter pontuação mais recente
           const response = await fetch(`/api/profile?userId=${userData.id}`);
           if (response.ok) {
             const data = await response.json();
@@ -36,7 +33,6 @@ export default function Profile() {
             localStorage.setItem('user', JSON.stringify(data.user));
           }
         } else {
-          // Se não há usuário logado, redirecionar para login
           router.push('/login');
           return;
         }
@@ -51,7 +47,6 @@ export default function Profile() {
     loadUserData();
   }, [router]);
 
-  // Atualização automática da pontuação a cada 10 segundos
   useEffect(() => {
     if (!user) return;
 
@@ -60,7 +55,6 @@ export default function Profile() {
         const response = await fetch(`/api/profile?userId=${user.id}`);
         if (response.ok) {
           const data = await response.json();
-          // Só atualiza se a pontuação mudou
           if (data.user.score !== user.score) {
             setUser(data.user);
             localStorage.setItem('user', JSON.stringify(data.user));
@@ -72,10 +66,8 @@ export default function Profile() {
       }
     };
 
-    // Atualizar a cada 10 segundos
     const interval = setInterval(updateScore, 10000);
 
-    // Limpar o interval quando o componente for desmontado
     return () => clearInterval(interval);
   }, [user]);
 
@@ -90,7 +82,6 @@ export default function Profile() {
       setTimeout(() => setCopySuccess(false), 3000);
     } catch (error) {
       console.error('Erro ao copiar link:', error);
-      // Fallback para navegadores mais antigos
       const textArea = document.createElement('textarea');
       textArea.value = referralLink;
       document.body.appendChild(textArea);
@@ -128,9 +119,9 @@ export default function Profile() {
 
   if (isLoading) {
     return (
-      <div className={styles.container}>
-        <div className={styles.loading}>
-          <div className={styles.spinner}></div>
+      <div className="profile-container">
+        <div className="loading">
+          <div className="spinner"></div>
           <p>Carregando...</p>
         </div>
       </div>
@@ -144,83 +135,83 @@ export default function Profile() {
   const referralLink = `${typeof window !== 'undefined' ? window.location.origin : ''}/register?ref=${user.referralCode}`;
 
   return (
-    <div className={styles.container}>
-      <div className={styles.profileCard}>
-        <div className={styles.header}>
-          <h1 className={styles.title}>Meu Perfil</h1>
-          <button onClick={handleLogout} className={styles.logoutButton}>
+    <div className="profile-container">
+      <div className="profile-card">
+        <div className="header">
+          <h1 className="title">Meu Perfil</h1>
+          <button onClick={handleLogout} className="logout-button">
             Sair
           </button>
         </div>
 
-        <div className={styles.userInfo}>
-          <div className={styles.avatar}>
+        <div className="user-info">
+          <div className="avatar">
             {user.name.charAt(0).toUpperCase()}
           </div>
-          <h2 className={styles.userName}>{user.name}</h2>
-          <p className={styles.userEmail}>{user.email}</p>
+          <h2 className="user-name">{user.name}</h2>
+          <p className="user-email">{user.email}</p>
         </div>
 
-        <div className={styles.scoreSection}>
-          <div className={styles.scoreCard}>
-            <div className={styles.scoreHeader}>
+        <div className="score-section">
+          <div className="score-card">
+            <div className="score-header">
               <h3>Pontuação Atual</h3>
               <button 
                 onClick={handleRefreshScore} 
-                className={styles.refreshButton}
+                className="refresh-button"
                 disabled={isLoading}
                 title="Atualizar pontuação"
               >
                 🔄
               </button>
             </div>
-            <div className={styles.scoreValue}>
+            <div className="score-value">
               {user.score}
-              <span className={styles.scoreLabel}>pontos</span>
+              <span className="score-label">pontos</span>
             </div>
             {lastUpdate && (
-              <div className={styles.lastUpdate}>
+              <div className="last-update">
                 Última atualização: {lastUpdate.toLocaleTimeString()}
               </div>
             )}
-            <div className={styles.autoUpdateInfo}>
+            <div className="auto-update-info">
               ✨ Atualização automática a cada 10 segundos
             </div>
           </div>
         </div>
 
-        <div className={styles.referralSection}>
-          <h3 className={styles.sectionTitle}>Seu Link de Indicação</h3>
-          <p className={styles.referralDescription}>
+        <div className="referral-section">
+          <h3 className="section-title">Seu Link de Indicação</h3>
+          <p className="referral-description">
             Compartilhe este link e ganhe 1 ponto para cada pessoa que se cadastrar!
           </p>
           
-          <div className={styles.referralLinkContainer}>
+          <div className="referral-link-container">
             <input
               type="text"
               value={referralLink}
               readOnly
-              className={styles.referralLinkInput}
+              className="referral-link-input"
             />
             <button
               onClick={handleCopyReferralLink}
-              className={`${styles.copyButton} ${copySuccess ? styles.copySuccess : ''}`}
+              className={`copy-button ${copySuccess ? 'copy-success' : ''}`}
             >
               {copySuccess ? '✓ Copiado!' : '📋 Copiar Link'}
             </button>
           </div>
 
           {copySuccess && (
-            <div className={styles.copyMessage}>
+            <div className="copy-message">
               Link copiado para a área de transferência!
             </div>
           )}
         </div>
 
-        <div className={styles.stats}>
-          <div className={styles.statItem}>
-            <span className={styles.statLabel}>Código de Indicação</span>
-            <span className={styles.statValue}>{user.referralCode}</span>
+        <div className="stats">
+          <div className="stat-item">
+            <span className="stat-label">Código de Indicação</span>
+            <span className="stat-value">{user.referralCode}</span>
           </div>
         </div>
       </div>

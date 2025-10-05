@@ -12,7 +12,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Buscar usuário
     const { data: user, error } = await supabase
       .from('users')
       .select('*')
@@ -29,6 +28,10 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       message: 'Login realizado com sucesso',
+      user: {
+        id: user.id,
+        name: user.name,
+      }
     });
 
   } catch (error) {
