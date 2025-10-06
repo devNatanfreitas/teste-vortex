@@ -132,7 +132,7 @@ function RegisterForm() {
       }
 
    
-      alert('Cadastro realizado com sucesso! Faça login para continuar.');
+
       router.push('/login');
 
     } catch (error) {
