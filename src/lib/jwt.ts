@@ -1,13 +1,11 @@
 import jwt from 'jsonwebtoken';
 
-// Dados que vão dentro do token
 export interface TokenData {
   userId: string;
   email: string;
   name: string;
 }
 
-// Função para CRIAR um token JWT
 export function createToken(userData: TokenData): string {
   const secret = process.env.JWT_SECRET;
   
@@ -16,11 +14,10 @@ export function createToken(userData: TokenData): string {
   }
 
   return jwt.sign(userData, secret, {
-    expiresIn: '1d', // Expira em 1 dia
+    expiresIn: '1d',
   });
 }
 
-// Função para VERIFICAR se um token é válido
 export function verifyToken(token: string): TokenData | null {
   try {
     const secret = process.env.JWT_SECRET;

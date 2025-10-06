@@ -18,7 +18,6 @@ function RegisterForm() {
   const searchParams = useSearchParams();
 
   useEffect(() => {
-    // Verificar se usuário já está logado
     const token = localStorage.getItem('token');
     if (token) {
       router.push('/profile');

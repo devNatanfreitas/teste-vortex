@@ -21,7 +21,6 @@ export default function Profile() {
 
   const loadUserData = async () => {
     try {
-      // Se já tem usuário carregado, só atualiza o score
       const token = localStorage.getItem('token');
       console.log('Token exists:', !!token);
 
@@ -31,7 +30,6 @@ export default function Profile() {
         return;
       }
 
-      // Tenta acessar a API
       console.log('Fazendo requisição para API...');
       const response = await fetch('/api/profile', {
         headers: {
@@ -45,13 +43,11 @@ export default function Profile() {
         const data = await response.json();
         console.log('Dados recebidos da API:', data);
         
-        // Se já tem user e o score é diferente, atualiza
         if (user && data.user.score !== user.score) {
           setUser(data.user);
           localStorage.setItem('user', JSON.stringify(data.user));
           setLastUpdate(new Date());
         } else if (!user) {
-          // Se não tem user ainda, define pela primeira vez
           setUser(data.user);
           localStorage.setItem('user', JSON.stringify(data.user));
           setLastUpdate(new Date());
@@ -79,7 +75,6 @@ export default function Profile() {
   useEffect(() => {
     if (!user) return;
 
-    // Atualiza automaticamente a cada 10 segundos
     const interval = setInterval(() => {
       loadUserData();
     }, 10000);
