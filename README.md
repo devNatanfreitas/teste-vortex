@@ -203,15 +203,7 @@ const hashedPassword = await bcrypt.hash(password, 12);
 | `referred_id` | UUID | Quem foi indicado |
 | `referred_email` | VARCHAR(255) | Email indicado |
 
-## 🚀 Deploy
 
-### **Vercel (Recomendado)**
-```bash
-npm install -g vercel
-vercel --prod
-```
-
-Configure as mesmas variáveis de ambiente na Vercel Dashboard.
 
 ## 🔧 Scripts Disponíveis
 
