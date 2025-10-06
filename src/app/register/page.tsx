@@ -18,17 +18,41 @@ function RegisterForm() {
   const searchParams = useSearchParams();
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      router.push('/profile');
-      return;
-    }
+
+    const checkLoginStatus = () => {
+      const token = localStorage.getItem('token');
+      const userSession = localStorage.getItem('userSession');
+      
+      if (token && userSession) {
+        const session = JSON.parse(userSession);
+        if (session.loggedIn) {
+          router.push('/profile');
+          return;
+        }
+      }
+    };
+
+ 
+    checkLoginStatus();
+
+
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === 'userSession' || e.key === 'token') {
+        checkLoginStatus();
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
 
     const ref = searchParams.get('ref');
     if (ref) {
       setReferralCode(ref);
     }
-  }, [searchParams, router]);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, [router, searchParams]);
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
@@ -107,9 +131,9 @@ function RegisterForm() {
         return;
       }
 
-      localStorage.setItem('user', JSON.stringify(data.user));
-      
-      router.push('/profile');
+   
+      alert('Cadastro realizado com sucesso! Faça login para continuar.');
+      router.push('/login');
 
     } catch (error) {
       console.error('Erro no cadastro:', error);
