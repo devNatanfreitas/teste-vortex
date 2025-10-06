@@ -266,83 +266,92 @@ npm start
 
 ## 🤖 Colaboração com IA
 
-Durante o desenvolvimento deste projeto, utilizei ferramentas de IA de forma estratégica para acelerar o desenvolvimento e garantir melhores práticas de segurança. Aqui está um detalhamento de como a IA contribuiu para cada parte do projeto:
+Durante o desenvolvimento deste projeto, utilizei ferramentas de IA de forma específica e estratégica em duas áreas principais. Aqui está um detalhamento preciso de como a IA contribuiu para o projeto:
 
-### 🎨 **Frontend & Interface do Usuário**
-**Uso Principal**: O GitHub Copilot foi extensivamente utilizado na construção da interface do usuário.
+### 🔒 **Medidas de Segurança do Backend**
+**Uso Principal**: A IA foi utilizada para identificar e implementar práticas de segurança robustas no backend.
 
-**Áreas de Contribuição**:
-- **Componentes React**: Criação de estruturas de componentes funcionais com hooks modernos
-- **CSS Responsivo**: Desenvolvimento de estilos mobile-first e layouts flexíveis
-- **Validações Frontend**: Implementação de validações em tempo real para formulários
-- **UX/UI**: Sugestões para melhorar a experiência do usuário e feedback visual
+**Contribuições Específicas**:
+- **Prevenção Anti-Fraude**: Implementação de verificação para evitar auto-referência no sistema de indicações
+- **Hash de Senhas**: Orientação sobre configuração adequada do bcrypt com salt rounds seguros
+- **Validação JWT**: Implementação de tokens seguros com expiração apropriada
+- **Sanitização e Validações**: Dupla validação de dados entre frontend e backend
+- **Prevenção de Duplicatas**: Verificações para evitar referências duplicadas no banco
 
-**Exemplo Prático**:
-```typescript
-// IA ajudou na estruturação deste hook customizado para gerenciar estado do usuário
-const [user, setUser] = useState<User | null>(null);
-const [isLoading, setIsLoading] = useState(true);
-const [copySuccess, setCopySuccess] = useState(false);
-```
-
-### 🔒 **Medidas de Segurança**
-**Uso Principal**: A IA foi crucial na identificação e implementação de práticas de segurança que poderiam estar faltando.
-
-**Contribuições de Segurança**:
-- **Prevenção Anti-Fraude**: Sugestão para implementar verificação de auto-referência
-- **Hash de Senhas**: Orientação sobre uso correto do bcrypt com salt adequado
-- **Validação JWT**: Melhores práticas para tokens seguros e expiração
-- **Sanitização de Dados**: Prevenção de injeções e validações duplas
-
-**Medidas Implementadas com Ajuda da IA**:
+**Exemplos de Implementação**:
 ```typescript
 // Anti-fraude: Prevenção de auto-referência
 if (referrer.email === email) {
   return { error: 'Não é possível usar seu próprio código de referência' };
 }
 
-// Hash seguro sugerido pela IA
+// Hash seguro implementado com ajuda da IA
 const hashedPassword = await bcrypt.hash(password, 12);
 
-// Validação JWT robusta
+// JWT com configuração de segurança sugerida pela IA
 const token = jwt.sign(userData, JWT_SECRET, { expiresIn: '1d' });
 ```
 
-### 📊 **Backend & APIs**
-**Uso Moderado**: Suporte na estruturação das APIs REST e integração com Supabase.
+### 🎨 **Frontend - Organização e Estilização**
+**Uso Principal**: A IA auxiliou na organização do código frontend e na estruturação dos estilos CSS.
 
-**Contribuições**:
-- **Estrutura de Rotas**: Organização das API routes do Next.js
-- **Tratamento de Erros**: Implementação de error handling consistente
-- **Integração Supabase**: Otimização de queries e relacionamentos
+**Áreas de Contribuição**:
+- **Organização de Componentes**: Estruturação lógica dos componentes React e seus estados
+- **CSS Responsivo**: Criação de layouts flexíveis e mobile-first
+- **Estrutura de Estilos**: Organização hierárquica e reutilização de classes CSS
+- **Design System**: Padronização de cores, espaçamentos e tipografia
+- **Layout Grid**: Implementação de sistemas de grid com CSS puro
+
+**Exemplo de Organização**:
+```css
+/* Estrutura CSS organizada com ajuda da IA */
+.profile-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.profile-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Sistema responsivo implementado */
+@media (max-width: 768px) {
+  .profile-container {
+    padding: 16px;
+  }
+}
+```
 
 ### 🧠 **Aprendizados da Colaboração**
 
 #### **Pontos Positivos**:
-1. **Aceleração do Desenvolvimento**: A IA reduziu significativamente o tempo de codificação, especialmente no frontend
-2. **Descoberta de Vulnerabilidades**: Identificou potenciais falhas de segurança que eu poderia ter overlooked
-3. **Melhores Práticas**: Sugeriu padrões modernos do React 19 e Next.js 15
-4. **Debugging Eficiente**: Ajudou na identificação rápida de problemas no código
+1. **Segurança Aprimorada**: A IA identificou vulnerabilidades que poderiam passar despercebidas
+2. **Código Mais Organizado**: Sugestões para melhor estruturação de arquivos e estilos
+3. **Boas Práticas**: Implementação de padrões de segurança e organização reconhecidos
+4. **Eficiência**: Aceleração no desenvolvimento das partes onde foi utilizada
 
-#### **Desafios Encontrados**:
-1. **Context Awareness**: Às vezes a IA sugeria soluções que não se adequavam ao contexto específico do projeto
-2. **Validação Necessária**: Todas as sugestões precisaram ser validadas e testadas cuidadosamente
-3. **Personalização**: Algumas soluções genéricas precisaram ser adaptadas para os requisitos específicos
+#### **Limitações Encontradas**:
+1. **Contexto Específico**: Nem todas as sugestões se adequavam ao projeto específico
+2. **Validação Manual**: Todas as implementações precisaram ser testadas e validadas
+3. **Adaptação Necessária**: Algumas soluções genéricas precisaram ser customizadas
 
 #### **Lições Aprendidas**:
-- **IA como Parceiro**: A IA funciona melhor como um parceiro de desenvolvimento, não como substituto do pensamento crítico
-- **Segurança em Primeiro Lugar**: A IA foi especialmente valiosa para identificar gaps de segurança
-- **Iteração Contínua**: O processo funcionou melhor com feedback constante e refinamento das sugestões
-- **Conhecimento Base**: Ter conhecimento prévio foi fundamental para avaliar e melhorar as sugestões da IA
+- **Uso Focado**: A IA foi mais efetiva quando usada em áreas específicas (segurança e organização)
+- **Parceria Consciente**: Funcionou melhor como ferramenta de apoio, não como substituto
+- **Validação Crítica**: Importante sempre avaliar e testar as sugestões da IA
+- **Conhecimento Base**: Experiência prévia foi fundamental para filtrar as melhores sugestões
 
 ### 🎯 **Resultado Final**
-A colaboração com IA resultou em:
-- **Código mais seguro** com implementação de medidas anti-fraude
-- **Interface mais polida** com melhor UX/UI
-- **Desenvolvimento mais rápido** mantendo qualidade
-- **Aprendizado acelerado** de tecnologias mais recentes (React 19, Next.js 15)
+A colaboração focada com IA resultou em:
+- **Backend mais seguro** com medidas anti-fraude robustas
+- **Frontend bem organizado** com CSS estruturado e responsivo
+- **Código mais limpo** e fácil de manter
+- **Desenvolvimento direcionado** nas áreas onde a IA mais agrega valor
 
-A experiência demonstrou que a IA é uma ferramenta poderosa quando usada de forma consciente e crítica, especialmente em áreas como frontend e segurança, onde pode identificar padrões e sugerir melhorias que poderiam passar despercebidas.
+A experiência mostrou que o uso estratégico e focado da IA em áreas específicas (segurança do backend e organização/estilização do frontend) pode trazer benefícios significativos quando aplicado com conhecimento e validação adequados.
 
 
 
