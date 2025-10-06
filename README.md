@@ -264,11 +264,7 @@ npm start
 - **Real-time**: Suporte nativo para atualizações
 - **Managed**: Sem necessidade de configuração de infraestrutura
 
----
 
-**Desenvolvido com 💙 por [Natan Freitas](https://github.com/devNatanfreitas)**
-
-*Sistema robusto, seguro e escalável para gerenciamento de indicações*
 
 
 
