@@ -296,7 +296,6 @@ const token = jwt.sign(userData, JWT_SECRET, { expiresIn: '1d' });
 **Uso Principal**: A IA auxiliou na organização do código frontend e na estruturação dos estilos CSS.
 
 **Áreas de Contribuição**:
-- **Organização de Componentes**: Estruturação lógica dos componentes React e seus estados
 - **CSS Responsivo**: Criação de layouts flexíveis e mobile-first
 - **Estrutura de Estilos**: Organização hierárquica e reutilização de classes CSS
 - **Design System**: Padronização de cores, espaçamentos e tipografia
