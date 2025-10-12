@@ -1,4 +1,4 @@
-# 🎯 Teste Vortex - Sistema de Indicação
+# Teste Vortex - Sistema de Indicação
 
 [![Next.js](https://img.shields.io/badge/Next.js-15.5.4-black?logo=next.js)](https://nextjs.org/)
 [![React](https://img.shields.io/badge/React-19.1.0-blue?logo=react)](https://reactjs.org/)
@@ -7,30 +7,30 @@
 
 Sistema completo de cadastro de usuários com **sistema de indicação**, **autenticação JWT**, **pontuação em tempo real** e **medidas anti-fraude**. Desenvolvido com Next.js 15 + React 19, priorizando segurança e experiência do usuário.
 
-## 🚀 Funcionalidades Principais
+## Funcionalidades Principais
 
-### 🔐 **Autenticação & Segurança**
+### **Autenticação & Segurança**
 - **Autenticação JWT** com tokens seguros (expiração: 24h)
 - **Hash de senhas** com bcrypt (salt rounds: 12)
 - **Proteção anti-fraude**: Prevenção de auto-referência
 - **Validação dupla**: Front-end + Back-end
 - **Redirecionamento inteligente**: Usuários logados não acessam registro
 
-### 📊 **Sistema de Indicação**
+### **Sistema de Indicação**
 - **Links únicos** de indicação para cada usuário
 - **Pontuação automática**: +1 ponto por indicação válida
 - **Atualização em tempo real**: Auto-refresh a cada 10 segundos
 - **Botão de refresh manual** para atualização instantânea
 - **Prevenção de duplicatas**: Mesmo email não pode ser referenciado duas vezes
 
-### 🎨 **Interface & UX**
+### **Interface & UX**
 - **Design responsivo** (mobile-first)
 - **CSS puro** (sem frameworks)
 - **Feedback visual** em todas as ações
 - **Loading states** e animações suaves
 - **Copiar link** com confirmação visual
 
-## 🛠️ Stack Tecnológica
+## Stack Tecnológica
 
 | Categoria | Tecnologia | Versão | Justificativa |
 |-----------|------------|---------|---------------|
@@ -42,25 +42,20 @@ Sistema completo de cadastro de usuários com **sistema de indicação**, **aute
 | **Security** | bcryptjs | 3.0.2 | Hash de senhas seguro |
 | **Styling** | CSS Puro | - | Controle total, sem dependências |
 
-## 🔒 Medidas de Segurança Implementadas
+## Segurança
 
-### ✅ **Autenticação Robusta**
+O sistema possui algumas medidas de segurança básicas:
+
 ```typescript
-// JWT com expiração e validação
+// JWT com expiração
 const token = jwt.sign(userData, secret, { expiresIn: '1d' });
-```
 
-### ✅ **Proteção Anti-Fraude**
-```typescript
-// Prevenção de auto-referência
+// Evita auto-referência
 if (referrer.email === email) {
   return { error: 'Não é possível usar seu próprio código de referência' };
 }
-```
 
-### ✅ **Prevenção de Duplicatas**
-```typescript
-// Verificação de referência duplicada
+// Previne duplicatas
 const existingReferral = await supabase
   .from('referrals')
   .select('id')
@@ -68,72 +63,72 @@ const existingReferral = await supabase
   .eq('referred_email', email);
 ```
 
-## 📦 Instalação e Configuração
+## Instalação
 
-### 1. **Clone e Dependências**
+### 1. Clone e instale
 ```bash
 git clone https://github.com/devNatanfreitas/teste-vortex.git
 cd teste-vortex
 npm install
 ```
 
-### 2. **Configuração do Supabase**
+### 2. Configure o Supabase
 
 1. Crie uma conta em [Supabase](https://supabase.com)
 2. Crie um novo projeto
-3. O banco já está configurado e pronto para uso
+3. Configure as variáveis de ambiente
 
-### 3. **Variáveis de Ambiente**
+### 3. Variáveis de ambiente
 
-Crie `.env.local` na raiz:
+Crie `.env.local`:
 ```env
 SUPABASE_URL=https://seu-projeto.supabase.co
 SUPABASE_SERVICE_ROLE_KEY=sua_service_role_key_aqui
-JWT_SECRET=seu_jwt_secret_super_seguro_aqui
+JWT_SECRET=seu_jwt_secret_aqui
 ```
 
-### 4. **Executar o Projeto**
+### 4. Execute
 ```bash
 npm run dev
 ```
 
-Acesse: [http://localhost:3000](http://localhost:3000)
+Acesse: http://localhost:3000
 
-## 🎯 Como Usar
+## Como usar
 
-### 🔑 **Fluxo de Autenticação**
+### Fluxo básico
 
-1. **Registro**: `/register` ou com referência `/register?ref=ABC123`
+1. **Registro**: `/register` ou com link de referência `/register?ref=ABC123`
 2. **Login**: `/login` com email/senha
 3. **Perfil**: Redirecionamento automático para `/profile`
-4. **Logout**: Botão no perfil (limpa tokens)
+4. **Logout**: Botão no perfil
 
-### 📈 **Sistema de Pontuação**
+### Pontuação
 
 - **Ganhar pontos**: Compartilhe seu link de referência
 - **Atualização**: Automática (10s) + manual (botão 🔄)
 - **Visualização**: Tempo real na página de perfil
 
-### 🔗 **Links de Indicação**
+### **Links de Indicação**
 
 Formato: `https://seusite.com/register?ref=CODIGO_UNICO`
 
 Cada usuário recebe um código único (ex: `A7B8C9D0`)
 
-## 📱 Design Responsivo
+## Design Responsivo
 
-### 📊 **Breakpoints**
+### **Breakpoints**
 - **Mobile**: < 768px (design principal)
 - **Tablet**: 768px - 1024px
 - **Desktop**: > 1024px
 
-### 🎨 **Características**
+### **Características**
 - **Mobile-first** approach
 - **Touch-friendly** (botões 44px+)
 - **Tipografia** escalável
 - **Grid flexível** com CSS Grid/Flexbox
 
-## 🗂️ Estrutura do Projeto
+## Estrutura do Projeto
 
 ```
 teste-vortex/
@@ -159,9 +154,9 @@ teste-vortex/
 └── README.md
 ```
 
-## 🧪 Validações Implementadas
+## Validações Implementadas
 
-### 📝 **Frontend (Tempo Real)**
+### **Frontend (Tempo Real)**
 ```typescript
 // Validação de email
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -172,7 +167,7 @@ const hasNumber = /\d/.test(password);
 const minLength = password.length >= 8;
 ```
 
-### 🛡️ **Backend (Segurança)**
+### **Backend (Segurança)**
 ```typescript
 // Verificação de duplicatas
 const { data: existingUser } = await supabase
@@ -184,9 +179,9 @@ const { data: existingUser } = await supabase
 const hashedPassword = await bcrypt.hash(password, 12);
 ```
 
-## 📊 Banco de Dados (Supabase)
+## Banco de Dados (Supabase)
 
-### 👤 **Tabela: users**
+### **Tabela: users**
 | Campo | Tipo | Descrição |
 |-------|------|-----------|
 | `id` | UUID | Chave primária |
@@ -196,7 +191,7 @@ const hashedPassword = await bcrypt.hash(password, 12);
 | `referral_code` | VARCHAR(10) | Código único |
 | `score` | INTEGER | Pontuação atual |
 
-### 🔗 **Tabela: referrals**
+### **Tabela: referrals**
 | Campo | Tipo | Descrição |
 |-------|------|-----------|
 | `referrer_id` | UUID | Quem indicou |
@@ -205,7 +200,7 @@ const hashedPassword = await bcrypt.hash(password, 12);
 
 
 
-## 🔧 Scripts Disponíveis
+## Scripts Disponíveis
 
 ```bash
 # Desenvolvimento com Turbopack
@@ -218,30 +213,30 @@ npm run build
 npm start
 ```
 
-### ✅ **Conformidade com Requisitos**
+### **Conformidade com Requisitos**
 
-### 📋 **Requisitos Funcionais** ✅
+### **Requisitos Funcionais**
 - [x] Página de cadastro com validação
 - [x] Página de perfil com pontuação
 - [x] Sistema de indicação funcional
 - [x] Botão copiar link implementado
 - [x] Atualização de pontuação (**melhorada**: tempo real)
 
-### 🔧 **Requisitos Técnicos** ✅
+### **Requisitos Técnicos**
 - [x] CSS puro (zero frameworks)
 - [x] Design responsivo completo
 - [x] API REST organizada
 - [x] Banco PostgreSQL (Supabase)
 - [x] Justificativas técnicas documentadas
 
-### 🚀 **Funcionalidades Extras**
+### **Funcionalidades Extras**
 - [x] **Autenticação JWT** (não solicitada)
 - [x] **Segurança anti-fraude** (não solicitada)
 - [x] **Atualização tempo real** (melhoria)
 - [x] **TypeScript** completo (melhoria)
 - [x] **Proteções de segurança** (melhoria)
 
-## 🎯 Justificativas Técnicas
+## Justificativas Técnicas
 
 ### **Next.js 15 + React 19**
 - **App Router**: Roteamento moderno e performático
@@ -264,11 +259,11 @@ npm start
 - **Real-time**: Suporte nativo para atualizações
 - **Managed**: Sem necessidade de configuração de infraestrutura
 
-## 🤖 Colaboração com IA
+## Colaboração com IA
 
 Durante o desenvolvimento deste projeto, utilizei ferramentas de IA de forma específica e estratégica em duas áreas principais. Aqui está um detalhamento preciso de como a IA contribuiu para o projeto:
 
-### 🔒 **Medidas de Segurança do Backend**
+### **Medidas de Segurança do Backend**
 **Uso Principal**: A IA foi utilizada para identificar e implementar práticas de segurança robustas no backend.
 
 **Contribuições Específicas**:
@@ -292,7 +287,7 @@ const hashedPassword = await bcrypt.hash(password, 12);
 const token = jwt.sign(userData, JWT_SECRET, { expiresIn: '1d' });
 ```
 
-### 🎨 **Frontend - Organização e Estilização**
+### **Frontend - Organização e Estilização**
 **Uso Principal**: A IA auxiliou na organização do código frontend e na estruturação dos estilos CSS.
 
 **Áreas de Contribuição**:
@@ -324,7 +319,7 @@ const token = jwt.sign(userData, JWT_SECRET, { expiresIn: '1d' });
 }
 ```
 
-### 🧠 **Aprendizados da Colaboração**
+### **Aprendizados da Colaboração**
 
 #### **Pontos Positivos**:
 1. **Segurança Aprimorada**: A IA identificou vulnerabilidades que poderiam passar despercebidas
@@ -343,7 +338,7 @@ const token = jwt.sign(userData, JWT_SECRET, { expiresIn: '1d' });
 - **Validação Crítica**: Importante sempre avaliar e testar as sugestões da IA
 - **Conhecimento Base**: Experiência prévia foi fundamental para filtrar as melhores sugestões
 
-### 🎯 **Resultado Final**
+### **Resultado Final**
 A colaboração focada com IA resultou em:
 - **Backend mais seguro** com medidas anti-fraude robustas
 - **Frontend bem organizado** com CSS estruturado e responsivo
