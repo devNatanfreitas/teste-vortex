@@ -1,11 +1,11 @@
-# 🎯 Teste Vortex - Sistema de Indicações Seguro
+# 🎯 Teste Vortex - Sistema de Indicação
 
 [![Next.js](https://img.shields.io/badge/Next.js-15.5.4-black?logo=next.js)](https://nextjs.org/)
 [![React](https://img.shields.io/badge/React-19.1.0-blue?logo=react)](https://reactjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?logo=typescript)](https://typescriptlang.org/)
 [![Supabase](https://img.shields.io/badge/Supabase-PostgreSQL-green?logo=supabase)](https://supabase.com/)
 
-Sistema completo de cadastro de usuários com **sistema de indicações seguro**, **autenticação JWT**, **pontuação em tempo real** e **medidas anti-fraude**. Desenvolvido com Next.js 15 + React 19, priorizando segurança e experiência do usuário.
+Sistema completo de cadastro de usuários com **sistema de indicação**, **autenticação JWT**, **pontuação em tempo real** e **medidas anti-fraude**. Desenvolvido com Next.js 15 + React 19, priorizando segurança e experiência do usuário.
 
 ## 🚀 Funcionalidades Principais
 
@@ -16,7 +16,7 @@ Sistema completo de cadastro de usuários com **sistema de indicações seguro**
 - **Validação dupla**: Front-end + Back-end
 - **Redirecionamento inteligente**: Usuários logados não acessam registro
 
-### 📊 **Sistema de Indicações**
+### 📊 **Sistema de Indicação**
 - **Links únicos** de indicação para cada usuário
 - **Pontuação automática**: +1 ponto por indicação válida
 - **Atualização em tempo real**: Auto-refresh a cada 10 segundos
@@ -218,12 +218,12 @@ npm run build
 npm start
 ```
 
-## ✅ Conformidade com Requisitos
+### ✅ **Conformidade com Requisitos**
 
 ### 📋 **Requisitos Funcionais** ✅
 - [x] Página de cadastro com validação
 - [x] Página de perfil com pontuação
-- [x] Sistema de indicações funcional
+- [x] Sistema de indicação funcional
 - [x] Botão copiar link implementado
 - [x] Atualização de pontuação (**melhorada**: tempo real)
 
