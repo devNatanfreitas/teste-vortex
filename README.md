@@ -1,4 +1,4 @@
-# Teste Vortex - Sistema de Indicação
+# Sistema de Indicação
 
 [![Next.js](https://img.shields.io/badge/Next.js-15.5.4-black?logo=next.js)](https://nextjs.org/)
 [![React](https://img.shields.io/badge/React-19.1.0-blue?logo=react)](https://reactjs.org/)
